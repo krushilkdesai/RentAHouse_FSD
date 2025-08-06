@@ -1,0 +1,81 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+*.db
+
+# Environment
+.env
+.venv/
+venv/
+ENV/
+env/
+*.env
+
+# IDE/editor configs
+.vscode/
+.idea/
+*.swp
+
+# Static and media files
+staticfiles/
+media/
+static/
+
+# Node.js (if frontend is involved)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+
+# Compiled frontend assets (if using webpack, etc.)
+dist/
+build/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Backup files
+*.bak
+*.tmp
+*.orig
+
+# Coverage and test reports
+htmlcov/
+coverage.xml
+*.cover
+.tox/
+nosetests.xml
+test_db.sqlite3
+
+# MyPy and other analysis tools
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytest_cache/
+
+# PyCharm
+*.idea/
+
+# Gunicorn and other deployment
+*.pid
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
