@@ -1,0 +1,179 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="/stylesheets/form.css">
+</div> <!-- Close container from header -->
+
+<div class="form-container">
+    <div class="form-background">
+        <div class="form-overlay"></div>
+    </div>
+    
+    <div class="form-content">
+        <div class="form-card">
+            <div class="form-header">
+                <div class="form-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h1 class="form-title">List Your Property</h1>
+                <p class="form-subtitle">Create a new rental listing and start earning</p>
+            </div>
+            
+            <form action="/houses" method="POST" enctype="multipart/form-data" class="property-form">
+                <!-- Basic Information Section -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-info-circle"></i>
+                        Basic Information
+                    </h3>
+                    
+                    <div class="form-group-modern">
+                        <label for="name" class="form-label">Property Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-tag input-icon"></i>
+                            <input type="text" id="name" name="house[name]" class="form-input" placeholder="Enter property name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group-modern">
+                            <label for="price" class="form-label">Price per Month</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-rupee-sign input-icon"></i>
+                                <input type="number" id="price" name="house[price]" class="form-input" placeholder="0.00" min="0.01" step="0.01" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group-modern">
+                            <label for="location" class="form-label">Location</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-map-marker-alt input-icon"></i>
+                                <input type="text" id="location" name="house[location]" class="form-input" placeholder="City, State" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property Details Section -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-bed"></i>
+                        Property Details
+                    </h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group-modern">
+                            <label for="bedrooms" class="form-label">Bedrooms</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-bed input-icon"></i>
+                                <input type="number" id="bedrooms" name="house[bedrooms]" class="form-input" placeholder="0" min="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group-modern">
+                            <label for="beds" class="form-label">Beds</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-bed input-icon"></i>
+                                <input type="number" id="beds" name="house[beds]" class="form-input" placeholder="0" min="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group-modern">
+                            <label for="bathrooms" class="form-label">Bathrooms</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-bath input-icon"></i>
+                                <input type="number" id="bathrooms" name="house[bathrooms]" class="form-input" placeholder="0" min="0" step="0.5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Details Section -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-user"></i>
+                        Contact Details
+                    </h3>
+                    <div class="form-row">
+                        <div class="form-group-modern">
+                            <label for="contactName" class="form-label">Contact Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="contactName" name="house[contactName]" class="form-input" placeholder="Enter contact name" required>
+                            </div>
+                        </div>
+                        <div class="form-group-modern">
+                            <label for="contactMobile" class="form-label">Mobile Number</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input type="tel" id="contactMobile" name="house[contactMobile]" class="form-input" placeholder="Enter mobile number" pattern="[0-9]{10,15}" required>
+                            </div>
+                        </div>
+                        <div class="form-group-modern">
+                            <label for="contactEmail" class="form-label">Email ID</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" id="contactEmail" name="house[contactEmail]" class="form-input" placeholder="Enter email address" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Media Section -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-images"></i>
+                        Property Images
+                    </h3>
+                    
+                    <div class="form-group-modern">
+                        <label for="images" class="form-label">Upload Images (Up to 10 images)</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="images" name="images" class="file-input" accept="image/*" multiple required>
+                            <div class="file-upload-area">
+                                <div class="file-upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="file-upload-text">
+                                    <p class="upload-main">Click to upload or drag and drop multiple images</p>
+                                    <p class="upload-sub">PNG, JPG, GIF up to 10MB each (Max 10 images)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Preview Container -->
+                        <div class="image-preview-container" id="imagePreview"></div>
+                    </div>
+                </div>
+                
+                <!-- Description Section -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-align-left"></i>
+                        Description
+                    </h3>
+                    
+                    <div class="form-group-modern">
+                        <label for="description" class="form-label">Property Description</label>
+                        <div class="textarea-wrapper">
+                            <textarea id="description" name="house[description]" class="form-textarea" placeholder="Describe your property, amenities, nearby attractions, and what makes it special..." rows="6"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Section -->
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-plus"></i>
+                        <span>Create Listing</span>
+                    </button>
+                    
+                    <a href="/houses" class="cancel-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Cancel</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

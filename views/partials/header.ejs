@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Make site responsive on mobile/tablet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RentEase</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Asap|Lexend+Giga&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/navbar.css">
+    <link rel="stylesheet" href="/stylesheets/pages.css">
+</head>
+
+<body>
+
+    <!-- Modern Professional Navbar -->
+    <nav class="navbar-modern">
+        <div class="navbar-container">
+            <div class="navbar-content">
+                <!-- Brand/Logo -->
+                <div class="navbar-brand">
+                    <a href="/" class="brand-link">
+                        <div class="brand-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span class="brand-text">RentEase</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="navbar-nav">
+                    <a href="/houses" class="nav-link <%= typeof page !== 'undefined' && page === 'houses' ? 'active' : '' %>">
+                        <i class="fas fa-home"></i>
+                        <span>Properties</span>
+                    </a>
+                    <a href="/houses/new" class="nav-link">
+                        <i class="fas fa-plus"></i>
+                        <span>List Property</span>
+                    </a>
+                    <a href="/about" class="nav-link <%= typeof page !== 'undefined' && page === 'about' ? 'active' : '' %>">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About Us</span>
+                    </a>
+                    <a href="/contact" class="nav-link <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="navbar-actions">
+                    <% if(!currentUser){ %>
+                    <a href="/login" class="nav-button login-btn <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                    <a href="/register" class="nav-button signup-btn <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Sign Up</span>
+                    </a>
+                    <% } else { %>
+                    <div class="user-dropdown">
+                        <button class="user-menu-btn" onclick="toggleUserMenu()">
+                            <div class="user-avatar">
+                                <% if(currentUser.avatar) { %>
+                                <img src="<%= currentUser.avatar %>" alt="<%= currentUser.username %>">
+                                <% } else { %>
+                                <i class="fas fa-user"></i>
+                                <% } %>
+                            </div>
+                            <span class="user-name"><%= currentUser.username %></span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </button>
+                        <div class="user-dropdown-menu" id="userDropdown">
+                            <a href="/users/<%= currentUser.id %>" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span>Profile</span>
+                            </a>
+                            
+                            <div class="dropdown-divider"></div>
+                            <a href="/logout" class="dropdown-item logout-item">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <a href="/houses" class="mobile-nav-link <%= typeof page !== 'undefined' && page === 'houses' ? 'active' : '' %>">
+                    <i class="fas fa-home"></i>
+                    <span>Properties</span>
+                </a>
+                <a href="/houses/new" class="mobile-nav-link">
+                    <i class="fas fa-plus"></i>
+                    <span>List Property</span>
+                </a>
+                <a href="/about" class="mobile-nav-link <%= typeof page !== 'undefined' && page === 'about' ? 'active' : '' %>">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About Us</span>
+                </a>
+                <a href="/contact" class="mobile-nav-link <%= typeof page !== 'undefined' && page === 'contact' ? 'active' : '' %>">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact Us</span>
+                </a>
+                
+                <div class="mobile-menu-divider"></div>
+                
+                <% if(!currentUser){ %>
+                <a href="/login" class="mobile-nav-link <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </a>
+                <a href="/register" class="mobile-nav-link <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Sign Up</span>
+                </a>
+                <% } else { %>
+                <div class="mobile-user-info">
+                    <div class="mobile-user-avatar">
+                        <% if(currentUser.avatar) { %>
+                        <img src="<%= currentUser.avatar %>" alt="<%= currentUser.username %>">
+                        <% } else { %>
+                        <i class="fas fa-user"></i>
+                        <% } %>
+                    </div>
+                    <span class="mobile-user-name"><%= currentUser.username %></span>
+                </div>
+                <a href="/users/<%= currentUser.id %>" class="mobile-nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <a href="/houses?user=<%= currentUser.id %>" class="mobile-nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>My Properties</span>
+                </a>
+                <a href="/logout" class="mobile-nav-link logout-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <% if(error && error.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+        <% } %>
+        <% if(success && success.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+        <% } %>
+    </div>
+
+    <div class="container">

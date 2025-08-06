@@ -1,0 +1,60 @@
+<% include ../partials/header %>
+
+<div class="row">
+    <h1 style="text-align:center;">Edit House: <%= house.name%></h1>
+    <div style="width: 30%; margin: 20px auto;">
+        <form action="/houses/<%=house._id%>/?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" name="name" value="<%=house.name%>">
+            </div>
+            <div class="form-group">
+                <label for="price">Price per Month</label>
+                <input class="form-control" type="number" name="price" value="<%=house.price %>" min="
+                    0.01" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input class="form-control" type="file" id="image" name="image" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="bedrooms">Bedrooms</label>
+                <input class="form-control" type="number" name="bedrooms" value="<%=house.bedrooms%>">
+            </div>
+            <div class="form-group">
+                <label for="beds">Beds</label>
+                <input class="form-control" type="number" name="beds" value="<%=house.beds%>">
+            </div>
+            <div class="form-group">
+                <label for="bathrooms">Bathrooms</label>
+                <input class="form-control" type="number" name="bathrooms" value="<%=house.bathrooms%>">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input class="form-control" type="text" name="location" id="location" value="<%=house.location%>">
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input class="form-control" type="text" name="description" value="<%=house.description%>">
+            </div>
+            <div class="form-group">
+                <label for="contactName">Contact Name</label>
+                <input class="form-control" type="text" name="house[contactName]" value="<%=house.contactName || ''%>">
+            </div>
+            <div class="form-group">
+                <label for="contactMobile">Mobile Number</label>
+                <input class="form-control" type="tel" name="house[contactMobile]" value="<%=house.contactMobile || ''%>">
+            </div>
+            <div class="form-group">
+                <label for="contactEmail">Email ID</label>
+                <input class="form-control" type="email" name="house[contactEmail]" value="<%=house.contactEmail || ''%>">
+            </div>
+            <div class="form-group">
+                <button class="btn-lg btn-primary btn-block">Submit</button>
+            </div>
+        </form>
+        <a href="/houses">Back to houses</a>
+    </div>
+</div>
+
+<% include ../partials/footer %>

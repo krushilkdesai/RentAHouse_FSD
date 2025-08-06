@@ -1,0 +1,122 @@
+<% include ./partials/header %>
+
+<!-- Hero Section -->
+<div class="page-hero">
+    <div class="container">
+        <div class="text-center">
+            <h1>Contact Us</h1>
+            <p>We're here to help! As a registered member, you can contact our team for any questions, support, or feedback about RentAHouse.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Form Section -->
+<div class="page-content">
+    <div class="container">
+        <div class="contact-form-section">
+            <div class="contact-form-content">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p style="margin-bottom: 40px;">We're committed to providing exceptional service and support. Reach out to us through any of the channels below.</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <h4>Email</h4>
+                            <p>support@rentahouse.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <h4>Phone</h4>
+                            <p>+91 9257316420</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <h4>Address</h4>
+                            <p>123 Minion<br>Surat, Gujarat <br>India</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-item-content">
+                            <h4>Business Hours</h4>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <% if(currentUser) { %>
+                        <p style="color: #5a6c7d; margin-bottom: 30px;">Hello <%= currentUser.username %>! Fill out the form below and we'll get back to you as soon as possible.</p>
+                    <% } else { %>
+                        <p style="color: #5a6c7d; margin-bottom: 30px;">Fill out the form below and we'll get back to you as soon as possible.</p>
+                    <% } %>
+                    
+                    <form action="/contact" method="POST">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <% if(currentUser && (currentUser.firstName || currentUser.lastName)) { %>
+                                <input type="text" class="form-control" id="name" name="name" 
+                                       value="<%= ((currentUser.firstName || '') + ' ' + (currentUser.lastName || '')).trim() %>" 
+                                       placeholder="Enter your full name" required>
+                            <% } else { %>
+                                <input type="text" class="form-control" id="name" name="name" 
+                                       placeholder="Enter your full name" required>
+                            <% } %>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <% if(currentUser && currentUser.email) { %>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       value="<%= currentUser.email %>" 
+                                       placeholder="Enter your email address" readonly required>
+                                <small class="form-text text-muted">This is your registered email address.</small>
+                            <% } else { %>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       placeholder="Enter your email address" required>
+                            <% } %>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="What is this regarding?" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea class="form-control textarea" id="message" name="message" placeholder="Tell us how we can help you..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane" style="margin-right: 8px;"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<% include ./partials/footer %>

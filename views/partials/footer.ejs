@@ -1,0 +1,234 @@
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<p style="text-align: center;"><strong>RentEase 2025</strong></p>
+
+<!-- JQUERY CDN -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<!-- BOOTSTRAP CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"
+    integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw" crossorigin="anonymous">
+</script>
+
+<!-- Navbar JavaScript -->
+<script>
+    // Toggle user dropdown menu
+    function toggleUserMenu() {
+        const dropdown = document.querySelector('.user-dropdown');
+        const menu = document.getElementById('userDropdown');
+        
+        if (dropdown && menu) {
+            dropdown.classList.toggle('active');
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        
+        if (mobileMenu && mobileMenuBtn) {
+            mobileMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        }
+    }
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (mobileMenu && mobileMenuBtn) {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar-modern');
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+    });
+
+    // Close dropdowns when pressing escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            // Close user dropdown
+            const userDropdown = document.querySelector('.user-dropdown');
+            if (userDropdown) {
+                userDropdown.classList.remove('active');
+            }
+            
+            // Close mobile menu
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            if (mobileMenu && mobileMenuBtn) {
+                mobileMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            }
+        }
+    });
+
+    // Multiple File Upload Enhancement
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.querySelector('.file-input');
+        const fileUploadArea = document.querySelector('.file-upload-area');
+        const uploadMain = document.querySelector('.upload-main');
+        const uploadSub = document.querySelector('.upload-sub');
+        const imagePreview = document.getElementById('imagePreview');
+        
+        let selectedFiles = [];
+        const maxFiles = 10;
+        const maxFileSize = 10 * 1024 * 1024; // 10MB
+        
+        if (fileInput && fileUploadArea) {
+            // Handle file selection
+            fileInput.addEventListener('change', function(e) {
+                handleFiles(e.target.files);
+            });
+            
+            // Handle drag and drop
+            fileUploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                fileUploadArea.classList.add('dragover');
+            });
+            
+            fileUploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+            });
+            
+            fileUploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFiles(files);
+                }
+            });
+        }
+        
+        function handleFiles(files) {
+            // Convert FileList to Array
+            const fileArray = Array.from(files);
+            
+            // Filter valid image files
+            const validFiles = fileArray.filter(file => {
+                const isValidType = file.type.startsWith('image/');
+                const isValidSize = file.size <= maxFileSize;
+                return isValidType && isValidSize;
+            });
+            
+            // Check if adding these files would exceed the limit
+            if (selectedFiles.length + validFiles.length > maxFiles) {
+                alert(`You can only upload up to ${maxFiles} images.`);
+                return;
+            }
+            
+            // Add valid files to selectedFiles
+            selectedFiles = [...selectedFiles, ...validFiles];
+            
+            // Update UI
+            updateFileDisplay();
+            updatePreview();
+            
+            // Update the file input with selected files
+            updateFileInput();
+        }
+        
+        function updateFileDisplay() {
+            if (selectedFiles.length > 0) {
+                fileUploadArea.classList.add('has-file');
+                uploadMain.textContent = `${selectedFiles.length} image${selectedFiles.length > 1 ? 's' : ''} selected`;
+                
+                const totalSize = selectedFiles.reduce((total, file) => total + file.size, 0);
+                uploadSub.textContent = `Total size: ${(totalSize / 1024 / 1024).toFixed(2)} MB`;
+            } else {
+                fileUploadArea.classList.remove('has-file');
+                uploadMain.textContent = 'Click to upload or drag and drop multiple images';
+                uploadSub.textContent = 'PNG, JPG, GIF up to 10MB each (Max 10 images)';
+            }
+        }
+        
+        function updatePreview() {
+            if (!imagePreview) return;
+            
+            imagePreview.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'image-preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview ${index + 1}">
+                        <div class="image-preview-overlay">
+                            <button type="button" class="remove-image-btn" onclick="removeImage(${index})">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="image-preview-info">
+                            <span class="image-name">${file.name}</span>
+                            <span class="image-size">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                        </div>
+                    `;
+                    imagePreview.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        function updateFileInput() {
+            // Create a new DataTransfer object to simulate file selection
+            const dataTransfer = new DataTransfer();
+            selectedFiles.forEach(file => {
+                dataTransfer.items.add(file);
+            });
+            fileInput.files = dataTransfer.files;
+        }
+        
+        // Global function to remove images
+        window.removeImage = function(index) {
+            selectedFiles.splice(index, 1);
+            updateFileDisplay();
+            updatePreview();
+            updateFileInput();
+        };
+        
+        // Form submission loading state
+        const submitBtn = document.querySelector('.submit-btn');
+        const propertyForm = document.querySelector('.property-form');
+        
+        if (submitBtn && propertyForm) {
+            propertyForm.addEventListener('submit', function() {
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+            });
+        }
+    });
+</script>
+
+</body>
+
+</html>

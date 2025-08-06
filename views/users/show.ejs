@@ -1,0 +1,70 @@
+<% include ../partials/header %>
+
+<!-- Optional: Animate.css CDN (for fade/slide effects) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Profile Column -->
+        <div class="col-lg-4 mb-4 animate__animated animate__fadeInLeft">
+            <div class="card shadow-sm border-0 rounded">
+                <div class="card-body text-center">
+                    
+                    <!-- Name -->
+                    <h3 class="card-title mb-1"><%= user.firstName %> <%= user.lastName %></h3>
+                    <!-- Email -->
+                    <p>
+                        <a href="mailto:<%= user.email %>" class="text-decoration-none text-primary">
+                            <i class="bi bi-envelope-fill me-2"></i><%= user.email %>
+                        </a>
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Listings Column -->
+        <div class="col-lg-8 animate__animated animate__fadeInRight">
+            <div class="card shadow-sm border-0 rounded p-4">
+                <h4 class="mb-4"><%= user.username %>'s Property Listings</h4>
+
+                <% if (houses.length === 0) { %>
+                    <div class="alert alert-warning">No listings found for this user.</div>
+                <% } else { %>
+                    <div class="row g-4">
+                        <% houses.forEach((house) => { %>
+                            <div class="col-md-6">
+                                <div class="card h-100 shadow-sm border-0 hover-shadow transition">
+                                    <img src="<%= house.image %>" class="card-img-top" alt="<%= house.name %>" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h5 class="card-title mb-1"><%= house.name %></h5>
+                                            <% if (house.location) { %>
+                                            <p class="text-muted small mb-2"><i class="bi bi-geo-alt-fill"></i> <%= house.location %></p>
+                                            <% } %>
+                                        </div>
+                                        <a href="/houses/<%= house.id %>" class="btn btn-outline-primary btn-sm mt-auto w-100">View Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
+
+<!-- Optional Custom Hover Shadow -->
+<style>
+    .hover-shadow:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .transition {
+        transition: all 0.3s ease-in-out;
+    }
+</style>

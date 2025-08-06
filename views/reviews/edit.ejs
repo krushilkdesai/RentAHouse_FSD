@@ -1,0 +1,99 @@
+<% include ../partials/header %>
+
+<style>
+  .star-rating {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .star {
+    width: 30px;
+    height: 30px;
+    stroke: #999;
+    fill: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .star.hovered,
+  .star.selected {
+    stroke: gold;
+    fill: gold;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <h1 style="text-align: center">Change Review</h1>
+    <div style="width: 30%; margin: 25px auto;">
+      <form action="/houses/<%= house_id %>/reviews/<%= review._id %>?_method=PUT" method="POST">
+        <div class="form-group">
+          <label for="rating">Leave a rating:</label>
+
+          <div class="star-rating" id="starRating">
+            <% for (let i = 1; i <= 5; i++) { %>
+              <svg
+                class="star <%= i <= review.rating ? 'selected' : '' %>"
+                data-value="<%= i %>"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 2l2.83 5.73L21 9.27l-4.5 4.39L17.66 21 12 17.77 6.34 21l1.16-7.34L3 9.27l6.17-.54L12 2z"/>
+              </svg>
+            <% } %>
+          </div>
+
+          <input type="hidden" name="review[rating]" id="selectedRating" value="<%= review.rating %>" />
+        </div>
+
+        <div class="form-group">
+          <textarea class="form-control" name="review[text]" placeholder="Write a review for this review..." rows="5"><%= review.text %></textarea>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">Submit a Review</button>
+        </div>
+      </form>
+      <a href="/houses/<%= house_id %>">Go Back</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('selectedRating');
+  let selectedRating = parseInt(ratingInput.value);
+
+  function highlightStars(rating) {
+    stars.forEach((star, index) => {
+      if (index < rating) {
+        star.classList.add('selected');
+      } else {
+        star.classList.remove('selected');
+      }
+    });
+  }
+
+  stars.forEach((star, index) => {
+    star.addEventListener('mouseover', () => {
+      highlightStars(index + 1);
+    });
+
+    star.addEventListener('mouseout', () => {
+      highlightStars(selectedRating);
+    });
+
+    star.addEventListener('click', () => {
+      selectedRating = index + 1;
+      ratingInput.value = selectedRating;
+      highlightStars(selectedRating);
+    });
+  });
+
+  // Initial highlight
+  highlightStars(selectedRating);
+</script>
+
+<% include ../partials/footer %>
